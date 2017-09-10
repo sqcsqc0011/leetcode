@@ -40,7 +40,7 @@ public class MainClass {
 		Integer[] arr = {3,2,5,null,9,null,1};
 		char[] tasks = {'A','A','A','A','A','A','A','A','A','A','B','B','B'};
 		
-		System.out.println(stringTag.complexNumberMultiply("-13+-27i", "1+-2i"));
+		System.out.println(stringTag.minDistance("seateat", "eata"));
 		
 	}
 }

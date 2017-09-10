@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
+
+import z_leetcode.TreeNode;
 
 public class StringTag {
 
@@ -253,13 +256,212 @@ public class StringTag {
     }
 	
 	//553. Optimal Division
+    //answer will always be (x1*x3*x4.....)/x2
     public String optimalDivision(int[] nums) {
-        
+    	if(nums.length == 1) return nums[0] + "";
+    	if(nums.length == 2) return nums[0] + "/" + nums[1];
+    	String res = nums[0] + "/(" + nums[1];
+    	for(int i = 2; i < nums.length; i++){
+    		res += "/" + nums[i];
+    	}
+    	res += ")";
+    	return res;
     }
 	
-	
-	
-	
+	//556. Next Greater Element III
+    //consider overflow!!
+    public int nextGreaterElement(int n) {
+        char[] number = (n + "").toCharArray();
+        int i = number.length - 1, j = i + 1;
+        for (i = number.length - 1; i > 0; i--){
+            if (number[i - 1] < number[i]) break;
+        }
+        if (i == 0) return -1;
+        int index = i;
+        char smallest = number[i];
+        for (j = i + 1; j < number.length; j++){
+            if(number[j] > number[i - 1] && number[j] < smallest) {
+            	index = j;
+            	smallest = number[j];
+            }
+        }
+        number[index] = number[i - 1];
+        number[i - 1] = smallest;
+        Arrays.sort(number, i, number.length);
+        long val = Long.parseLong(new String(number));
+        return (val <= Integer.MAX_VALUE) ? (int) val : -1;
+    }
+
+	//557. Reverse Words in a String III
+    public String reverseWords(String s) {
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        char[] a = s.toCharArray();
+        for(int i = 0; i<a.length;i++){
+            if(a[i] != ' '){
+                sb1.append(a[i]);
+            }else{
+                sb2.append(sb1.reverse().toString());
+                sb1.setLength(0);
+                sb2.append(" ");
+            }
+        }
+        sb2.append(sb1.reverse().toString());
+        return sb2.toString();
+    }
+    
+    //564. Find the Closest Palindrome
+    public String nearestPalindromic(String n) {
+        Long num = Long.parseLong(n);
+        Long highBound = getNextPalindrom(num + 1, true);
+        Long lowBound = getNextPalindrom(num - 1, false);
+        if (Math.abs(lowBound - num) <= Math.abs(highBound - num)) {
+        	return String.valueOf(lowBound);
+        }
+        return String.valueOf(highBound);
+    }
+
+    private Long getNextPalindrom(Long limit, boolean up) {
+        int inc = up ? 1 : -1;
+        char[] limitArr = String.valueOf(limit).toCharArray();
+        char[] base = limitArr.clone();
+        replicateFirstHalf(base);
+        for (int i = 0; i < limitArr.length; i++) {
+          if ((up && base[i] > limitArr[i]) || (!up && base[i] < limitArr[i])) {
+        	  return Long.parseLong(String.valueOf(base));
+          } else if ((up && base[i] < limitArr[i]) ||
+                     (!up && base[i] > limitArr[i])) {
+            for (int j = (limitArr.length - 1) / 2; j >= 0; j--) {
+              if (base[j] + inc < '0' || base[j] + inc > '9') {
+                base[j] = '0';
+              } else {
+                base[j] += inc;
+                break;
+              }
+            }
+            if (base[0] == '0') {
+              char[] temp = new char[base.length - 1];
+              Arrays.fill(temp, '9');
+              return Long.parseLong(String.valueOf(temp));
+            }
+            replicateFirstHalf(base);
+            return Long.parseLong(String.valueOf(base));
+          }
+        }
+        return Long.parseLong(String.valueOf(base));
+    }
+
+    private void replicateFirstHalf(char[] base) {
+        for (int i = 0; i < base.length / 2; i++) {
+        	base[base.length - 1 - i] = base[i];
+        }
+    }
+    
+    //583. Delete Operation for Two Strings
+    //find the longest common subsequence
+    public int minDistance(String word1, String word2) {
+        int len1 = word1.length(), len2 = word2.length();
+        int[][] dp = new int[len1 + 1][len2 + 1];
+        for(int i = 1; i <= len1; i++) {
+        	for(int j = 1; j <= len2; j++) {
+        		if(word1.charAt(i - 1) == word2.charAt(j - 1)) {
+        			dp[i][j] = dp[i - 1][j - 1] + 1;
+        		}
+        		dp[i][j] = Math.max(dp[i][j], dp[i][j - 1]);
+        		dp[i][j] = Math.max(dp[i][j], dp[i - 1][j]);        		
+        	}
+        }
+        int longest = dp[len1][len2];
+        return len1 + len2 - 2 * longest;
+    }
+    
+    //591. Tag Validator
+    public boolean isValid(String code) {
+        Stack<String> stack = new Stack<>();
+        for(int i = 0; i < code.length();){
+            if(i>0 && stack.isEmpty()) return false;
+            if(code.startsWith("<![CDATA[", i)){
+                int j = i+9;
+                i = code.indexOf("]]>", j);
+                if(i < 0) return false;
+                i += 3;
+            }else if(code.startsWith("</", i)){
+                int j = i + 2;
+                i = code.indexOf('>', j);
+                if(i < 0 || i == j || i - j > 9) return false;
+                for(int k = j; k < i; k++){
+                    if(!Character.isUpperCase(code.charAt(k))) return false;
+                }
+                String s = code.substring(j, i++);
+                if(stack.isEmpty() || !stack.pop().equals(s)) return false;
+            }else if(code.startsWith("<", i)){
+                int j = i + 1;
+                i = code.indexOf('>', j);
+                if(i < 0 || i == j || i - j > 9) return false;
+                for(int k = j; k < i; k++){
+                    if(!Character.isUpperCase(code.charAt(k))) return false;
+                }
+                String s = code.substring(j, i++);
+                stack.push(s);
+            }else{
+                i++;
+            }
+        }
+        return stack.isEmpty();
+    }
+    
+    //606. Construct String from Binary Tree
+	public String tree2str(TreeNode t) {
+		if(t == null) return "";
+		String str = t.val + "";
+		if(t.left == null && t.right == null) return str;
+		if(t.left != null) {
+			str += "(" + tree2str(t.left) + ")";
+			if(t.right != null) {
+				str += "(" + tree2str(t.right) + ")";
+			}
+		}
+		else if(t.left == null) str += "()" + "(" + tree2str(t.right) + ")";
+		return str;
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	
 	
 	
