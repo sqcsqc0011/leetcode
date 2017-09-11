@@ -58,14 +58,14 @@ public class MathTag {
     }
 	
 	//
-//	求一个base，使得给定的数转化为base下的数时每一位都是1
-//	数据量是10^18, 时间复杂度不能超过O(log(n))
-//	按转化后1的位数来遍历, 判定对应位数的1表示的值是否等于n
-//	假设base为k, 转化后的数中1的位数为m+1, 则有n=k^0+k^1+k^2+...+k^m
-//	显然n>k^m
-//	又有n=k^0+k^1+k^2+...+k^m < (k+1)^m
-//	因此可以得到n^(1/m - 1) < k < n^(1/m)
-//	由于k为整数, 因此可得k=⌊n^(1/m)⌋
+//	姹備竴涓猙ase锛屼娇寰楃粰瀹氱殑鏁拌浆鍖栦负base涓嬬殑鏁版椂姣忎竴浣嶉兘鏄�1
+//	鏁版嵁閲忔槸10^18, 鏃堕棿澶嶆潅搴︿笉鑳借秴杩嘜(log(n))
+//	鎸夎浆鍖栧悗1鐨勪綅鏁版潵閬嶅巻, 鍒ゅ畾瀵瑰簲浣嶆暟鐨�1琛ㄧず鐨勫�兼槸鍚︾瓑浜巒
+//	鍋囪base涓簁, 杞寲鍚庣殑鏁颁腑1鐨勪綅鏁颁负m+1, 鍒欐湁n=k^0+k^1+k^2+...+k^m
+//	鏄剧劧n>k^m
+//	鍙堟湁n=k^0+k^1+k^2+...+k^m < (k+1)^m
+//	鍥犳鍙互寰楀埌n^(1/m - 1) < k < n^(1/m)
+//	鐢变簬k涓烘暣鏁�, 鍥犳鍙緱k=鈱妌^(1/m)鈱�
 	public String smallestGoodBase(String n) {
         long num = Long.parseLong(n);
         long k = 0;
@@ -222,7 +222,7 @@ public class MathTag {
     }
 	
 	//372. Super Pow
-	//这个公式的意思就是，(a*b)%c=(a%c)*(b%c),因此我们可以在每一步计算结果之后都这么处理，防止溢出。
+	//杩欎釜鍏紡鐨勬剰鎬濆氨鏄紝(a*b)%c=(a%c)*(b%c),鍥犳鎴戜滑鍙互鍦ㄦ瘡涓�姝ヨ绠楃粨鏋滀箣鍚庨兘杩欎箞澶勭悊锛岄槻姝㈡孩鍑恒��
 	public boolean morethanzero(int[] x){
         for(int i = x.length - 1;i >= 0;i--){
             if(x[i] > 0) return true;
@@ -230,7 +230,7 @@ public class MathTag {
         return false;
     }
 
-	//高精度除法
+	//楂樼簿搴﹂櫎娉�
     public void div(int[] x,int y){
         int tmp = 0;
         for(int i = 0;i < x.length;i++){
@@ -259,7 +259,7 @@ public class MathTag {
     }
     
     //264. Ugly Number II
-    //idx表示当前prime乘的最大数的位置
+    //idx琛ㄧず褰撳墠prime涔樼殑鏈�澶ф暟鐨勪綅缃�
     public int nthUglyNumber(int n) {
         int[] ugs = new int[n];
         ugs[0] = 1;
@@ -344,9 +344,35 @@ public class MathTag {
     }
     
     //365. Water and Jug Problem
+    public boolean canMeasureWater(int x, int y, int z) {
+    	//limit brought by the statement that water is finallly in one or both buckets
+        if(x + y < z) return false;
+        //case x or y is zero
+        if( x == z || y == z || x + y == z ) return true;
+        int gcd = getGCD(x, y);
+        return z%gcd == 0;
+    }
+
+	private int getGCD(int x, int y) {
+		while(y != 0 ){
+	        int temp = y;
+	        y = x%y;
+	        x = temp;
+	    }
+	    return x;
+	}
     
-    
-    
+    //367. Valid Perfect Square
+	// Newtons's method.
+    // Find square root of num and square it
+    // square == num ? true : false;
+	public boolean isPerfectSquare(int num) {
+		long t = num;
+	    while (t * t > num) {
+	        t = (t + num / t) / 2;
+	    }
+	    return t * t == num;
+    }
     
     
     
