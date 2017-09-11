@@ -40,7 +40,7 @@ public class MainClass {
 		Integer[] arr = {3,2,5,null,9,null,1};
 		char[] tasks = {'A','A','A','A','A','A','A','A','A','A','B','B','B'};
 		
-		System.out.println(mathTag.canMeasureWater(417, 258, 5367));
+		System.out.println(mathTag.fractionAddition("1/2+1/2"));
 		
 	}
 }

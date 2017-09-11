@@ -352,15 +352,6 @@ public class MathTag {
         int gcd = getGCD(x, y);
         return z%gcd == 0;
     }
-
-	private int getGCD(int x, int y) {
-		while(y != 0 ){
-	        int temp = y;
-	        y = x%y;
-	        x = temp;
-	    }
-	    return x;
-	}
     
     //367. Valid Perfect Square
 	// Newtons's method.
@@ -374,10 +365,69 @@ public class MathTag {
 	    return t * t == num;
     }
     
+	//592. Fraction Addition and Subtraction
+	public String fractionAddition(String expression) {
+		int a1 = 0, a2 = 1, signIndex = -1;
+		boolean sign = true;
+		for(int i = 0; i < expression.length(); i++) {
+			if(expression.charAt(i) == '-' || expression.charAt(i) == '+' || i == expression.length() - 1) {
+				String b = expression.substring(signIndex + 1, i);
+				if(i == expression.length() - 1)  b = expression.substring(signIndex + 1, i + 1);
+				if(b.length() == 0) {
+					sign = expression.charAt(i) == '+'; 
+					signIndex = i;
+					continue;
+				}
+				int b1 = Integer.parseInt(b.split("/")[0]), b2 = Integer.parseInt(b.split("/")[1]);
+				if(sign) a1 = a1 * b2 + a2 * b1;
+				else a1 = a1 * b2 - a2 * b1;
+				a2 = a2 * b2;
+				int gcd = getGCD(a1, a2);
+				a1 = a1/gcd;
+				a2 = a2/gcd;
+				if(a2 < 0) {
+					a2 = -a2;
+					a1 = -a1;
+				}
+				sign = expression.charAt(i) == '+'; 
+				signIndex = i;
+			}
+		}
+		return a1 + "/" + a2;
+    }
     
+	private int getGCD(int x, int y) {
+		while(y != 0 ){
+	        int temp = y;
+	        y = x%y;
+	        x = temp;
+	    }
+	    return x;
+	}
     
-    
-    
+	//593. Valid Square
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
