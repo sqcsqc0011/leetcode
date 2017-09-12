@@ -230,16 +230,60 @@ public class TreeTag {
 	}
 
 	
+	//563. Binary Tree Tilt
+	//设置全局变量，求每个节点的和，相减得到当前tilt，加入到全局变量
+	int findTiltResult = 0;
+    public int findTilt(TreeNode root) {
+        postOrder(root);
+        return findTiltResult;
+    }
+    
+    private int postOrder(TreeNode root) {
+        if (root == null) return 0;
+        int left = postOrder(root.left);
+        int right = postOrder(root.right);
+        findTiltResult += Math.abs(left - right);
+        return left + right + root.val;
+    }
 	
+	//572. Subtree of Another Tree
+    public boolean isSubtree(TreeNode s, TreeNode t) {
+    	if(t == null || s == null) return false;
+        boolean res = checkSame(t , s);
+        if(res) return true;
+        return isSubtree(s.left, t) || isSubtree(s.right, t);
+    }
+	private boolean checkSame(TreeNode t, TreeNode s) {
+		if(t == null && s == null) return true;
+		if(t == null || s == null) return false;
+		if(t.val != s.val ) return false;
+		return checkSame(t.left, s.left) && checkSame(t.right, s.right);
+	}
 	
+	//606. Construct String from Binary Tree
+	public String tree2str(TreeNode t) {
+		String res = "";
+		if(t == null) return res;
+		res += t.val;
+		if(t.left == null && t.right == null) return res;
+		if(t.left == null) res += "()";
+		else res += "(" + tree2str(t.left) +")";
+		if(t.right != null) res += "(" + tree2str(t.right) +")";
+		return res;
+	}
 	
+	//617. Merge Two Binary Trees
+	public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if(t1 == null && t2 == null) return null;
+        if(t1 == null) return t2;
+        if(t2 == null) return t1;
+        TreeNode node = new TreeNode(t1.val + t2.val);
+        node.left = mergeTrees(t1.left, t2.left);
+        node.right = mergeTrees(t1.right, t2.right);
+        return node;
+    }
 	
-	
-	
-	
-	
-	
-	
+	//623. Add One Row to Tree
 	
 	
 	
