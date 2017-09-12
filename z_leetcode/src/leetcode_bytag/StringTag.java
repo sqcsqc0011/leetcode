@@ -179,12 +179,64 @@ public class StringTag {
 		}
 	}
 	
+	//521. Longest Uncommon Subsequence I
+	public int findLUSlengthI(String a, String b) {
+		return a.equals(b) ? -1 : Math.max(a.length(), b.length());
+	}
 	
+	//522. Longest Uncommon Subsequence II
+	public int findLUSlength(String[] strs) {
+        boolean allEqual = true;
+        for(int i = 1; i < strs.length; i++){
+        	if(!strs[i].equals(strs[i - 1])) allEqual = false;
+        }
+        if(allEqual) return -1;
+        Arrays.sort(strs, (a, b) -> Integer.compare(b.length(), a.length()));
+        for(int i = 0; i < strs.length; ++i) {
+            String first = strs[i];
+            boolean allOtherSub = true;
+            for(int j = 0; j < strs.length; ++j) {
+                if(j == i) continue;
+                String second = strs[j];
+                if(first.equals(second) || aSubB(first, second)) {
+                	allOtherSub = false;
+                    break;
+                }
+            }
+            if(allOtherSub) return first.length();
+        }
+        return -1;
+    }
+    
+    private boolean aSubB(String a, String b) {
+        int index = -1;
+        for(int k = 0; k < a.length(); k++) {
+            char c = a.charAt(k);
+            index = b.indexOf(c, index + 1);
+            if(index == -1) return false;
+        }
+        return true;
+    }
 	
-	
-	
-	
-	
+	//537. Complex Number Multiplication
+    public String complexNumberMultiply(String a, String b) {
+    	String a1 = a.split("\\+")[0];
+        int a_1 = a1.indexOf("-") == 0 ? 0 - Integer.parseInt(a1.substring(1)) : Integer.parseInt(a1);
+    	String a2 = a.split("\\+")[1];
+    	a2 = a2.substring(0, a2.length() - 1);
+    	int a_2 = a2.indexOf("-") == 0 ? 0 - Integer.parseInt(a2.substring(1)) : Integer.parseInt(a2);
+    	
+    	String b1 = b.split("\\+")[0];
+        int b_1 = b1.indexOf("-") == 0 ? 0 - Integer.parseInt(b1.substring(1)) : Integer.parseInt(b1);
+    	String b2 = b.split("\\+")[1];
+    	b2 = b2.substring(0, b2.length() - 1);
+    	int b_2 = b2.indexOf("-") == 0 ? 0 - Integer.parseInt(b2.substring(1)) : Integer.parseInt(b2);
+
+    	int res_1 = a_1 * b_1 - a_2 * b_2;
+    	int res_2 = a_2 * b_1 + a_1 * b_2;
+    	String res = res_1 + "+" + res_2 + "i";
+    	return res;
+    }
 	
 	
 	
