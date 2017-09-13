@@ -1,8 +1,11 @@
 package leetcode_bytag;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
 
@@ -425,12 +428,51 @@ public class StringTag {
 		return str;
 	}
     
+    //609. Find Duplicate File in System
+	public List<List<String>> findDuplicate(String[] paths) {
+        HashMap<String, List<String>> maps = new HashMap<String, List<String>>();
+        for(String path : paths){
+        	String[] files = path.split("\\s+");
+        	String root = files[0];
+        	for(int i = 1; i < files.length; i++){
+        		String file = files[i];
+        		for(int j = file.length() - 1; j >= 0; j--){
+        			if(file.charAt(j) == '('){
+        				String dir = root + "/" + file.substring(0, j);
+        				String content = file.substring(j + 1, file.length() - 1);
+        				List<String> strs = maps.getOrDefault(content, new ArrayList<String>());
+        				strs.add(dir);
+        				maps.put(content, strs);
+        				break;
+        			}
+        		}
+        	}
+        }
+        List<List<String>> res = new ArrayList<List<String>>();
+        for(String key : maps.keySet()){
+        	if(maps.get(key).size() > 1) res.add(maps.get(key));
+        }
+        return res;
+    }
     
+    //632. Smallest Range
+	//hard!!! priorityqueue
+//	public int[] smallestRange(List<List<Integer>> nums) {
+//        
+//    }
     
-    
-    
-    
-    
+    //657. Judge Route Circle
+	public boolean judgeCircle(String moves) {
+		int u = 0, d = 0, l = 0, r = 0;
+		for(int i = 0; i < moves.length(); i++){
+			if(moves.charAt(i) == 'U') u++;
+			else if(moves.charAt(i) == 'D') d++;
+			else if(moves.charAt(i) == 'L') l++;
+			else if(moves.charAt(i) == 'R') r++;
+		}
+		if( u == d && l == r) return true;
+		return false;
+    }
     
     
     

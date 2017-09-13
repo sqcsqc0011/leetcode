@@ -14,9 +14,9 @@ public class MainClass {
 		DynamicProgrammingTag dynamicProgrammingTag = new DynamicProgrammingTag();
 		
 		String text = "civilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth";
-		String[] texts = {"aba", "aba", "aa"};
+		String[] texts = {"root/a 1.txt(abcd) 2.txt(efgh)", "root/c 3.txt(abcd)", "root/c/d 4.txt(efgh)", "root 4.txt(efgh)"};
 		
-		int[] nums = {1,1,1,1,1};
+		int[] nums = {2, 7, 13, 19};
 		
 		int[][] numss = {{1,2},{3,4},{5,6},{7,8},{11,12},{9,10}};
 		//,{4,300},{5,500},{5,400},{5,250},{6,370},{6,360},{7,380}};
@@ -40,7 +40,7 @@ public class MainClass {
 		Integer[] arr = {3,2,5,null,9,null,1};
 		char[] tasks = {'A','A','A','A','A','A','A','A','A','A','B','B','B'};
 		
-		System.out.println(stringTag.minDistance("seateat", "eata"));
+		System.out.println(mathTag.nthUglyNumber(16));
 		
 	}
 }

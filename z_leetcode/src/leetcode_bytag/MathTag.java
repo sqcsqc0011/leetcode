@@ -257,10 +257,101 @@ public class MathTag {
         }
         return result;
     }
+    
+    //264. Ugly Number II
+    //idx表示当前prime乘的最大数的位置
+    public int nthUglyNumber(int n) {
+        int[] ugs = new int[n];
+        ugs[0] = 1;
+        int idx2 = 0, idx3 = 0, idx5 = 0;
+        for(int i = 1; i < n; i++){
+        	int min = Math.min( Math.min(2 * ugs[idx2], 3 * ugs[idx3]), 5 * ugs[idx5]);
+        	ugs[i] = min;
+        	if(min == 2 * ugs[idx2]) idx2++;
+        	if(min == 3 * ugs[idx3]) idx3++;
+        	if(min == 5 * ugs[idx5]) idx5++;
+        }
+        return ugs[n - 1];
+    }
 	
+	//313. Super Ugly Number
+    public int nthSuperUglyNumber(int n, int[] primes) {
+        int[] ugn = new int[n];
+        ugn[0] = 1;
+        int[] index = new int[primes.length];
+        for(int i = 1; i < n; i++){
+        	int min = Integer.MAX_VALUE;
+        	for(int j = 0; j < primes.length; j++){
+        		min = Math.min(ugn[index[j]] * primes[j], min);
+        	}
+        	ugn[i] = min;
+        	for(int j = 0; j < primes.length; j++){
+        		if(min == ugn[index[j]] * primes[j]) index[j]++;
+        	}
+        }
+        return ugn[n - 1];
+    }
 	
-	
-	
+	//319. Bulb Switcher
+    public int bulbSwitch(int n) {
+    	return (int) Math.sqrt(n);
+    }
+    
+    //672. Bulb Switcher II
+//  We only need to consider special cases which n<=2 and m < 3. When n >2 and m >=3, the result is 8.
+//	The four buttons:
+//	Flip all the lights.
+//	Flip lights with even numbers.
+//	Flip lights with odd numbers.
+//	Flip lights with (3k + 1) numbers, k = 0, 1, 2, ...
+//	If we use button 1 and 2, it equals to use button 3.
+//	Similarly...
+//
+//	1 + 2 --> 3, 1 + 3 --> 2, 2 + 3 --> 1
+//	So, there are only 8 cases.
+//	All_on, 1, 2, 3, 4, 1+4, 2+4, 3+4
+//	And we can get all the cases, when n>2 and m>=3.
+    public int flipLights(int n, int m) {
+    	if(m==0) return 1;
+        if(n==1) return 2;
+        if(n==2&&m==1) return 3;
+        if(n==2) return 4;
+        if(m==1) return 4;
+        if(m==2) return 7;
+        if(m>=3) return 8;
+        return 8;
+    }
+    
+    //326. Power of Three
+    public boolean isPowerOfThree(int n) {
+    	if(n <= 0) return false;
+        while(n > 1){
+        	if(n%3 != 0) return false;
+        	n = n/3;
+        }
+        return true;
+    }
+    
+    //335. Self Crossing
+    //hard.....
+    public boolean isSelfCrossing(int[] x) {
+        for(int i=3, l=x.length; i<l; i++) {
+            if(x[i]>=x[i-2] && x[i-1]<=x[i-3]) return true;  // Case 1: current line crosses the line 3 steps ahead of it
+            else if(i>=4 && x[i-1]==x[i-3] && x[i]+x[i-4]>=x[i-2]) return true; // Case 2: current line crosses the line 4 steps ahead of it
+            else if(i>=5 && x[i-2]>=x[i-4] && x[i]+x[i-4]>=x[i-2] && x[i-1]<=x[i-3] && x[i-1]+x[i-5]>=x[i-3]) return true;  // Case 3: current line crosses the line 6 steps ahead of it
+        }
+        return false;
+    }
+    
+    //365. Water and Jug Problem
+    
+    
+    
+    
+    
+    
+    
+    
 	
 	
 	
