@@ -40,7 +40,7 @@ public class MainClass {
 		Integer[] arr = {3,2,5,null,9,null,1};
 		char[] tasks = {'A','A','A','A','A','A','A','A','A','A','B','B','B'};
 		
-		System.out.println(mathTag.fractionAddition("1/2+1/2"));
+		System.out.println(mathTag.solveEquation("x+5-3+x=6+x-2"));
 		
 	}
 }

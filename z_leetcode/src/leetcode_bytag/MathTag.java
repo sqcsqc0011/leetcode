@@ -406,21 +406,112 @@ public class MathTag {
 	}
     
 	//593. Valid Square
+	public boolean validSquare(int[] p1, int[] p2, int[] p3, int[] p4) {
+		int[] lens = new int[6];
+		lens[0] = getLen(p1, p2);
+		lens[1] = getLen(p1, p3);
+		lens[2] = getLen(p1, p4);
+		lens[3] = getLen(p2, p3);
+		lens[4] = getLen(p2, p4);
+		lens[5] = getLen(p3, p4);
+        Arrays.sort(lens);
+        return lens[0] == lens[1] && lens[1] == lens[2] && lens[2] == lens[3] && lens[3] < lens[4] && lens[4] == lens[5];
+    }
+
+	private int getLen(int[] a, int[] b) {
+		return (int) (Math.pow((a[0] - b[0]), 2) + Math.pow((a[1] - b[1]), 2));
+	}
 	
+	//598. Range Addition II
+	public int maxCount(int m, int n, int[][] ops) {
+        int minRow = m, minCol = n;
+        for(int[] op : ops){
+        	minRow = Math.min(minRow, op[0]);
+        	minCol = Math.min(minCol, op[1]);
+        }
+        return minRow * minCol;
+    }
 	
+	//628. Maximum Product of Three Numbers
+    public int maximumProduct(int[] nums) {
+    	Arrays.sort(nums);
+    	return Math.max(nums[0] * nums[1] * nums[nums.length - 1], nums[nums.length - 1] * nums[nums.length - 2] * nums[nums.length - 3]);
+    }
 	
+    //633. Sum of Square Numbers
+    public boolean judgeSquareSum(int c) {
+        for(int i = 1; i * i <= c/2; i++){
+        	int n = (int) Math.sqrt(c - i * i);
+        	if( n * n == c - i * i) return true;
+        }
+        return false;
+    }
 	
+    //640. Solve the Equation
+    public String solveEquation(String equation) {
+        String[] strs = equation.split("=");
+        int[] left = getVar(strs[0]);
+        int[] right = getVar(strs[1]);
+        int x = left[0] - right[0];
+        int a = right[1] - left[1];
+        if(x == 0 && a == 0) return "Infinite solutions";
+        if(x == 0 && a != 0) return "No solution";
+        return "x=" + a/x;
+    }
+
+	private int[] getVar(String str) {
+		String[] tokens = str.split("(?=[-+])"); 
+	    int[] res =  new int[2];
+	    for (String token : tokens) {
+	        if (token.equals("+x") || token.equals("x")) res[0] += 1;
+			else if (token.equals("-x")) res[0] -= 1;
+			else if (token.contains("x")) res[0] += Integer.parseInt(token.substring(0, token.indexOf("x")));
+			else res[1] += Integer.parseInt(token);
+	    }
+	    return res;
+	}
 	
+	//645. Set Mismatch
+	public int[] findErrorNums(int[] nums) {
+		int[] res = new int[]{-1, -1};
+        for(int i = 0; i < nums.length; i++){
+        	if(nums[Math.abs(nums[i])- 1] < 0) res[0] = Math.abs(nums[i]);
+        	else nums[Math.abs(nums[i]) - 1] *= -1;
+        }
+        for(int i = 0; i < nums.length; i++){
+        	if(nums[i] > 0) res[1] = i + 1;
+        }
+        return res;
+    }
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//670. Maximum Swap
+	public int maximumSwap(int num) {
+        char[] chs = (num + "").toCharArray();
+        int index = 0;
+        for(int i = 1; i < chs.length; i++){
+        	if(chs[i] > chs[i - 1]) {
+        		index = i;
+        		break;
+        	}
+        }
+        if(index == 0) return num;
+        for(int i = index; i < chs.length; i++){
+        	if(chs[i] >= chs[index]){
+        		index = i;
+        	}
+        }
+        int pre = 0;
+        for(int i = 0; i < index; i++){
+        	if(chs[i] < chs[index]){
+        		pre = i;
+        		break;
+        	}
+        }
+        char tmp = chs[index];
+        chs[index] = chs[pre];
+        chs[pre] = tmp;
+        return (int) Long.parseLong(new String(chs));
+    }
 	
 	
 	
