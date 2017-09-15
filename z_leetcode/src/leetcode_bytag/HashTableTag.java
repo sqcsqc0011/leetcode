@@ -394,13 +394,74 @@ public class HashTableTag {
 	    return true;
 	}
 	
+	//554. Brick Wall
+	public int leastBricks(List<List<Integer>> wall) {
+        HashMap<Integer, Integer> maps = new HashMap<Integer, Integer>();
+        for(List<Integer> list : wall) {
+        	int gap = 0;
+        	for(int i = 0; i < list.size() - 1; i++) {
+        		gap += list.get(i);
+        		maps.put(gap, maps.getOrDefault(gap, 0) + 1);
+        	}
+        }
+        int max = 0;
+        for(int value : maps.values()) {
+        	max = Math.max(value, max);
+        }
+        return wall.size() - max;
+    }
 	
+	//575. Distribute Candies
+	public int distributeCandies(int[] candies) {
+        HashSet<Integer> set = new HashSet<Integer>();
+        int maxKinds = 0;
+        for(int candy : candies) {
+        	if(!set.contains(candy)) {
+        		maxKinds++;
+        		set.add(candy);
+        	}
+        }
+        int count = candies.length/2;
+        if(maxKinds >= count) return count;
+        else return maxKinds;
+    }
 	
+	//594. Longest Harmonious Subsequence
+	public int findLHS(int[] nums) {
+		HashMap<Integer, Integer> maps = new HashMap<Integer, Integer>();
+		for(int num : nums) {
+			maps.put(num, maps.getOrDefault(num, 0) + 1);
+		}
+		int max = 0;
+		for(int key : maps.keySet()) {
+			if(maps.containsKey(key + 1)) max = Math.max(max, maps.get(key) + maps.get(key + 1));
+			if(maps.containsKey(key - 1)) max = Math.max(max, maps.get(key) + maps.get(key - 1));
+		}
+		return max;
+    }
 	
+	//599. Minimum Index Sum of Two Lists
+	public String[] findRestaurant(String[] list1, String[] list2) {
+		HashMap<String, Integer> maps = new HashMap<String, Integer>();
+		HashMap<String, Integer> maps2 = new HashMap<String, Integer>();
+        for(int i = 0; i < list1.length; i++) {
+        	maps.put(list1[i], i);
+        }
+        for(int i = 0; i < list2.length; i++) {
+        	if(maps.containsKey(list2[i])) maps2.put(list2[i], maps.get(list2[i]) + i);
+        }
+        int min = Integer.MAX_VALUE;
+        for(int value : maps2.values()) {
+        	if(value < min) min = value;
+        }
+        List<String> res = new LinkedList<>();
+        for(String key : maps2.keySet()) {
+        	if(maps2.get(key) == min) res.add(key);
+        }
+        return res.toArray(new String[res.size()]);
+    }
 	
-	
-	
-	
+	//632. Smallest Range
 	
 	
 	

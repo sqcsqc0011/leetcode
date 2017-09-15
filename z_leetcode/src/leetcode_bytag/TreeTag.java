@@ -231,7 +231,7 @@ public class TreeTag {
 
 	
 	//563. Binary Tree Tilt
-	//����ȫ�ֱ�������ÿ���ڵ�ĺͣ�����õ���ǰtilt�����뵽ȫ�ֱ���
+	//锟斤拷锟斤拷全锟街憋拷锟斤拷锟斤拷锟斤拷每锟斤拷锟节碉拷暮停锟斤拷锟斤拷锟矫碉拷锟斤拷前tilt锟斤拷锟斤拷锟诫到全锟街憋拷锟斤拷
 	int findTiltResult = 0;
     public int findTilt(TreeNode root) {
         postOrder(root);
@@ -326,7 +326,7 @@ public class TreeTag {
 	}
 	
 	//652. Find Duplicate Subtrees
-	//将每一个treenode转化成str，判断是否有重复的str
+	//灏嗘瘡涓�涓猼reenode杞寲鎴恠tr锛屽垽鏂槸鍚︽湁閲嶅鐨剆tr
 	HashMap<String, List<TreeNode>> findDuplicateSubtreesMaps = new HashMap<String, List<TreeNode>>();
 	public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
 		getNodeStr(root);
@@ -379,7 +379,7 @@ public class TreeTag {
 	}
 	
 	//655. Print Binary Tree
-	//先求tree的高度，得到res的m和n，再遍历数，找到每个root.val放在数组的哪个位置上
+	//鍏堟眰tree鐨勯珮搴︼紝寰楀埌res鐨刴鍜宯锛屽啀閬嶅巻鏁帮紝鎵惧埌姣忎釜root.val鏀惧湪鏁扮粍鐨勫摢涓綅缃笂
 	public List<List<String>> printTree(TreeNode root) {
 		int deep = getRootDeep(root);
 		int len = 0;
@@ -427,10 +427,38 @@ public class TreeTag {
 	}
 	
 	//669. Trim a Binary Search Tree
+	public TreeNode trimBST(TreeNode root, int L, int R) {
+		if(root == null) return null;
+		if(root.val < L) {
+			return trimBST(root.right, L, R);
+		} else if(root.val > R) {
+			return trimBST(root.left, L, R);
+		} else {
+			root.left = trimBST(root.left, L, R);
+			root.right = trimBST(root.right, L, R);
+			return root;
+		}
+    }
 	
-	
-	
-	
+	//671. Second Minimum Node In a Binary Tree
+    int s1 = -1, s2 = -1;
+	public int findSecondMinimumValue(TreeNode root) {
+        findeMinValue(root);
+        return s2;
+    }
+	private void findeMinValue(TreeNode root) {
+		if(root == null || root.val > s2) return;
+		if(s1 == -1) s1 = root.val;
+		if(root.val < s1) {
+			s2 = s1;
+			s1 = root.val;
+		}
+		if(root.val > s1 && (s2 == -1 || root.val < s2)) {
+			s2 = root.val;
+		}
+		findeMinValue(root.left);
+		findeMinValue(root.right);
+	}
 	
 	
 	
