@@ -231,7 +231,7 @@ public class TreeTag {
 
 	
 	//563. Binary Tree Tilt
-	//����ȫ�ֱ�������ÿ���ڵ�ĺͣ�����õ���ǰtilt�����뵽ȫ�ֱ���
+	//����ȫ�ֱ�������ÿ���ڵ�ĺͣ�����õ���ǰtilt�����뵽ȫ�ֱ���
 	int findTiltResult = 0;
     public int findTilt(TreeNode root) {
         postOrder(root);
@@ -284,19 +284,149 @@ public class TreeTag {
     }
 	
 	//623. Add One Row to Tree
+	public TreeNode addOneRow(TreeNode root, int v, int d) {
+        return addOneRow(root, v, d, 1, true);
+    }
+	private TreeNode addOneRow(TreeNode root, int v, int d, int curD, boolean left) {
+		if(d == curD){
+			TreeNode node = new TreeNode(v);
+			if(root != null){
+				if(left) node.left = root;
+				else node.right = root;
+			}
+			return node;
+		}
+		if(root == null) return null;
+		curD++;
+		root.left = addOneRow(root.left, v, d, curD, true);
+		root.right = addOneRow(root.right, v, d, curD, false);
+		return root;
+	}
 	
+	//637. Average of Levels in Binary Tree
+	List<Double> averageOfLevelsRes = new ArrayList<Double>();
+	List<Integer> countOfLevelsRes = new ArrayList<Integer>();
+	public List<Double> averageOfLevels(TreeNode root) {
+        getAverageOfLevels(root, 0);
+		return averageOfLevelsRes;
+    }
+	private void getAverageOfLevels(TreeNode root, int level) {
+		if(root != null){
+			if(averageOfLevelsRes.size() < level + 1){
+				averageOfLevelsRes.add((double)root.val);
+				countOfLevelsRes.add(1);
+			}else{
+				averageOfLevelsRes.set(level, (averageOfLevelsRes.get(level) * countOfLevelsRes.get(level) + root.val)/(countOfLevelsRes.get(level) + 1));
+				countOfLevelsRes.set(level, countOfLevelsRes.get(level) + 1);
+			}
+			getAverageOfLevels(root.left, level + 1);
+			getAverageOfLevels(root.right, level + 1);
+		}
+		return;
+	}
 	
+	//652. Find Duplicate Subtrees
+	//将每一个treenode转化成str，判断是否有重复的str
+	HashMap<String, List<TreeNode>> findDuplicateSubtreesMaps = new HashMap<String, List<TreeNode>>();
+	public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
+		getNodeStr(root);
+		List<TreeNode> res = new ArrayList<TreeNode>();
+		for(List<TreeNode> value : findDuplicateSubtreesMaps.values()){
+			if(value.size() > 1) res.add(value.get(0));
+		}
+		return res;
+    }
+	private String getNodeStr(TreeNode root) {
+		if(root == null) return "";
+		String rootStr = root.val + "(" + getNodeStr(root.left) + ")" + "(" + getNodeStr(root.right) + ")";
+		if(!findDuplicateSubtreesMaps.containsKey(rootStr)) findDuplicateSubtreesMaps.put(rootStr, new ArrayList<TreeNode>());
+		findDuplicateSubtreesMaps.get(rootStr).add(root);
+		return rootStr;
+	}
 	
+	//653. Two Sum IV - Input is a BST
+	public boolean findTarget(TreeNode root, int k) {
+        return getSum(root, root, k);
+    }
+	private boolean getSum(TreeNode a, TreeNode b, int k) {
+		if(a == null || b == null) return false;
+		if(a.equals(b)) return getSum(a, a.right, k) || getSum(a.left, a, k);
+		if(a.val + b.val == k) return true;
+		if(a.val + b.val < k){
+			return getSum(a.right, b, k) || getSum(a, b.right, k);
+		} else{
+			return getSum(a.left, b, k) || getSum(a, b.left, k);
+		}
+	}
 	
+	//654. Maximum Binary Tree
+	public TreeNode constructMaximumBinaryTree(int[] nums) {
+        return constructMaximumBinaryTree(nums, 0, nums.length - 1);
+    }
+	private TreeNode constructMaximumBinaryTree(int[] nums, int s, int e) {
+		if(s > e || s < 0  || e < 0 || s >= nums.length || e >= nums.length) return null;
+		int index = s, max = nums[index];
+		for(int i = s + 1;i <= e; i++){
+			if(nums[i] > max){
+				max = nums[i];
+				index = i;
+			}
+		}
+		TreeNode node = new TreeNode(max);
+		node.left = constructMaximumBinaryTree(nums, s, index - 1);
+		node.right = constructMaximumBinaryTree(nums, index + 1, e);
+		return node;
+	}
 	
+	//655. Print Binary Tree
+	//先求tree的高度，得到res的m和n，再遍历数，找到每个root.val放在数组的哪个位置上
+	public List<List<String>> printTree(TreeNode root) {
+		int deep = getRootDeep(root);
+		int len = 0;
+		for(int i = 1; i <= deep; i++){
+			len += Math.pow(2, i - 1);
+		}
+		List<List<String>> res = new ArrayList<List<String>>();
+		List<String> row = new ArrayList<>();
+	    for(int i = 0; i < len; i++) row.add("");
+	    for(int i = 0; i < deep; i++) res.add(new ArrayList<>(row));
+		setPrintTree(root, res, 0, 0, len - 1, len - 1);
+		return res;
+    }
+	private void setPrintTree(TreeNode root, List<List<String>> res, int d, int s, int e, int max) {
+        if(root == null) return;
+		res.get(d).set((e - s)/2 + s, root.val + "");
+		setPrintTree(root.left, res, d + 1, s, (e - s)/2 + s - 1, max);
+		setPrintTree(root.right, res, d + 1, (e - s)/2 + s + 1, e, max);
+	}
+	private int getRootDeep(TreeNode root) {
+		if(root == null) return 0;
+		return 1 + Math.max(getRootDeep(root.left), getRootDeep(root.right));
+	}
 	
+	//662. Maximum Width of Binary Tree
+	//time out
+	public int widthOfBinaryTree(TreeNode root) {
+		List<Integer> start = new ArrayList<Integer>();
+		List<Integer> end = new ArrayList<Integer>();
+		getStartAndEndForTree(root, start, end, 0, 0);
+		int width = 1;
+		for(int i = 0; i < start.size(); i++){
+			width = Math.max(width, end.get(i) - start.get(i) + 1);
+		}
+		return width;
+    }
+	private void getStartAndEndForTree(TreeNode root, List<Integer> start, List<Integer> end, int d, int index) {
+		if(root == null) return;
+		if(start.size() < d + 1) {
+			start.add(index);
+			end.add(index);
+		} else end.set(d, index);
+		getStartAndEndForTree(root.left, start, end, d + 1, 2 * index);
+		getStartAndEndForTree(root.right, start, end, d + 1, 2 * index + 1);
+	}
 	
-	
-	
-	
-	
-	
-	
+	//669. Trim a Binary Search Tree
 	
 	
 	
