@@ -461,7 +461,58 @@ public class HashTableTag {
         return res.toArray(new String[res.size()]);
     }
 	
-	//632. Smallest Range
+	//648. Replace Words
+	public String replaceWords(List<String> dict, String sentence) {
+        HashSet<String> set = new HashSet<String>();
+        for(String str : dict) set.add(str);
+        String[] strs = sentence.split("\\s+");
+        String res = "";
+        for(int i = 0; i < strs.length; i++){
+        	String str = strs[i];
+        	for(int j = 1; j <= str.length(); j++){
+        		String sub = str.substring(0, j);
+        		if(set.contains(sub)){
+        			str = sub;
+        			break;
+        		}
+        	}
+        	res += str + " ";
+        }
+        return res.substring(0, res.length() - 1);
+    }
+	
+	//676. Implement Magic Dictionary
+	class MagicDictionary {
+		private HashMap<String, List<Character>> maps = new HashMap<String, List<Character>>();
+	    /** Initialize your data structure here. */
+	    public MagicDictionary() {
+	        
+	    }
+	    /** Build a dictionary through a list of words */
+	    public void buildDict(String[] dict) {
+	        for(String str : dict){
+	        	for(int i = 0; i < str.length(); i++){
+	        		String sub = str.substring(0, i) + "*" + str.substring(i + 1);
+	        		List<Character> chs = maps.getOrDefault(sub, new ArrayList<Character>());
+	        		chs.add(str.charAt(i));
+	        		maps.put(sub, chs);
+	        	}
+	        }
+	    }
+	    /** Returns if there is any word in the trie that equals to the given word after modifying exactly one character */
+	    public boolean search(String word) {
+	        for(int i = 0; i < word.length(); i++){
+	        	String sub = word.substring(0, i) + "*" + word.substring(i + 1);
+	        	if(maps.containsKey(sub)){
+	        		List<Character> chs = maps.get(sub);
+	        		for(Character ch : chs){
+	        			if(ch != word.charAt(i)) return true;
+	        		}
+	        	}
+	        }
+	        return false;
+	    }
+	}
 	
 	
 	
