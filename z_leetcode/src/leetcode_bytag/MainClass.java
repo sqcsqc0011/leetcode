@@ -1,6 +1,7 @@
 package leetcode_bytag;
 
-import leetcode_bytag.HashTableTag.MagicDictionary;
+import leetcode_contest.Weekly_50;
+import z_leetcode.ListNode;
 import z_leetcode.TreeNode;
 
 public class MainClass {
@@ -13,19 +14,25 @@ public class MainClass {
 		StringTag stringTag = new StringTag();
 		TreeTag treeTag = new TreeTag();
 		DynamicProgrammingTag dynamicProgrammingTag = new DynamicProgrammingTag();
+		LinkedListTag linkedListTag = new LinkedListTag();
+		Weekly_50 weekly_50 = new Weekly_50();
+		DFSTag dfsTag = new DFSTag();
 		
 		String text = "civilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth";
 		String[] texts = {"root/a 1.txt(abcd) 2.txt(efgh)", "root/c 3.txt(abcd)", "root/c/d 4.txt(efgh)", "root 4.txt(efgh)"};
 		String[] str1 = {"MagicDictionary", "buildDict", "search", "search", "search", "search"};
 		String[] str2 = {"Piatti","The Grill at Torrey Pines","Hungry Hunter Steakhouse","Shogun"};
 		
-		int[] nums = {3,2,1,6,0,5};
+		String[][] strss = {{"EZE","TIA"},{"EZE","HBA"},{"AXA","TIA"},{"JFK","AXA"},{"ANU","JFK"},{"ADL","ANU"},{"TIA","AUA"},{"ANU","AUA"},{"ADL","EZE"},{"ADL","EZE"},{"EZE","ADL"},{"AXA","EZE"},{"AUA","AXA"},{"JFK","AXA"},{"AXA","AUA"},{"AUA","ADL"},{"ANU","EZE"},{"TIA","ADL"},{"EZE","ANU"},{"AUA","ANU"}};
 		
-		int[][] numss = {{1,2},{3,4},{5,6},{7,8},{11,12},{9,10}};
+		int[] nums = {8, 1, 6, 6};
+		
+		int[][] numss = {{1,2,2,3,5},{3,2,3,4,4},{2,4,5,3,1},{6,7,1,4,5},{5,1,1,2,4}};
 		//,{4,300},{5,500},{5,400},{5,250},{6,370},{6,360},{7,380}};
 		
-		int[][] numss2 = {{30,50},{12,2},{3,4},{12,15}};
+		int[][] numss2 = {{9, 9, 4},{6, 6, 8},{2, 1, 1}};
 		
+		//treeNode
 		TreeNode root1 = new TreeNode(5);
 		TreeNode root2 = new TreeNode(3);
 		TreeNode root3 = new TreeNode(4);
@@ -40,9 +47,20 @@ public class MainClass {
 		root2.left = root5;
 		root2.right = root3;
 		
-		Integer[] arr = {3,2,5,null,9,null,1};
-		char[] tasks = {'A','A','A','A','A','A','A','A','A','A','B','B','B'};
+		//LinkedList
+		ListNode node1 = new ListNode(5);
+		ListNode node2 = new ListNode(6);
+		ListNode node3 = new ListNode(7);
+		ListNode node4 = new ListNode(8);
+		ListNode node5 = new ListNode(3);
+		ListNode node6 = new ListNode(2);
+		node1.next = node2;
+		node2.next = node3;
+		node3.next = node4;
+		//node4.next = node5;
+		//node5.next = node6;
+		ListNode[] nodes = {};
 		
-		System.out.println(hashtag.findRestaurant(str1, str2));
+		System.out.println(dfsTag.pacificAtlantic(numss));		
 	}
 }
