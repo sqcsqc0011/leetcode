@@ -1,6 +1,7 @@
 package leetcode_bytag;
 
 import leetcode_contest.Weekly_50;
+import mianjing.Paypal;
 import z_leetcode.ListNode;
 import z_leetcode.TreeNode;
 
@@ -17,6 +18,11 @@ public class MainClass {
 		LinkedListTag linkedListTag = new LinkedListTag();
 		Weekly_50 weekly_50 = new Weekly_50();
 		DFSTag dfsTag = new DFSTag();
+		
+		
+		
+		Paypal paypal = new Paypal();
+		paypal.addStr("1234", "54123421412");
 		
 		String text = "civilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth";
 		String[] texts = {"root/a 1.txt(abcd) 2.txt(efgh)", "root/c 3.txt(abcd)", "root/c/d 4.txt(efgh)", "root 4.txt(efgh)"};

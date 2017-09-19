@@ -61,7 +61,7 @@ public class DFSTag {
 	}
 	
 	//337. House Robber III //dfs
-	//nums[0]����root�����ֵ�� nums[1]������root�����ֵ // nums[1] = max(left[0], left[1]) + max(right[0], right[1])
+	//nums[0]锟斤拷锟斤拷root锟斤拷锟斤拷锟街碉拷锟� nums[1]锟斤拷锟斤拷锟斤拷root锟斤拷锟斤拷锟街� // nums[1] = max(left[0], left[1]) + max(right[0], right[1])
 	public int rob(TreeNode root) {
         int[] nums = robIIIHelper(root);
         return Math.max(nums[0], nums[1]);
@@ -147,7 +147,7 @@ public class DFSTag {
 	}
 	
 	//472. Concatenated Words
-	//用TrieNode可以很简单，学习TrieNode!!!!!
+	//鐢═rieNode鍙互寰堢畝鍗曪紝瀛︿範TrieNode!!!!!
 	public List<String> findAllConcatenatedWordsInADict(String[] words) {
         List<String> res = new ArrayList<String>();
         //use set to save the previous combine string
@@ -187,7 +187,7 @@ public class DFSTag {
 			if(sum[0] == sum[1] && sum[0] == sum[2] && sum[0] == sum[3] && sum[0] == len) return true;
 			else return false;
 		}
-		//sort之后判断最高值是否大于边长，减少时间
+		//sort涔嬪悗鍒ゆ柇鏈�楂樺�兼槸鍚﹀ぇ浜庤竟闀匡紝鍑忓皯鏃堕棿
 		if(nums[idx] > len) return false;
 		//dfs
 		for(int i = 0; i < sum.length; i++){
@@ -200,10 +200,10 @@ public class DFSTag {
 	}
 	
 	//488. Zuma Game
-	public int findMinStep(String board, String hand) {
-        
-    }
-	
+//	public int findMinStep(String board, String hand) {
+//        
+//    }
+//	
 	
 	
 	
