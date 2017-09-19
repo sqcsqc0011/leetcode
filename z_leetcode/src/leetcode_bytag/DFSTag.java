@@ -1,7 +1,9 @@
 package leetcode_bytag;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Stack;
@@ -59,7 +61,7 @@ public class DFSTag {
 	}
 	
 	//337. House Robber III //dfs
-	//nums[0]°üº¬rootµÄ×î´óÖµ£¬ nums[1]²»°üº¬rootµÄ×î´óÖµ // nums[1] = max(left[0], left[1]) + max(right[0], right[1])
+	//nums[0]ï¿½ï¿½ï¿½ï¿½rootï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ nums[1]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½rootï¿½ï¿½ï¿½ï¿½ï¿½Öµ // nums[1] = max(left[0], left[1]) + max(right[0], right[1])
 	public int rob(TreeNode root) {
         int[] nums = robIIIHelper(root);
         return Math.max(nums[0], nums[1]);
@@ -145,14 +147,62 @@ public class DFSTag {
 	}
 	
 	//472. Concatenated Words
-	//trienode!!!!!!!!!!!!!!!!!!!
+	//ç”¨TrieNodeå¯ä»¥å¾ˆç®€å•ï¼Œå­¦ä¹ TrieNode!!!!!
 	public List<String> findAllConcatenatedWordsInADict(String[] words) {
+        List<String> res = new ArrayList<String>();
+        //use set to save the previous combine string
+        HashSet<String> set = new HashSet<String>(Arrays.asList(words));
+        for(String word : words){
+        	set.remove(word);
+        	if(findAllConcatenatedWordsInADictHelper(word, "", set)) res.add(word);
+        	set.add(word);
+        }
+        return res;
+    }
+	private boolean findAllConcatenatedWordsInADictHelper(String word, String pre, HashSet<String> set) {
+		if(set.contains(word)) return true;
+		for(int i = 1; i < word.length(); i++){
+			String pre2 = word.substring(0, i);
+			if(set.contains(pre2)){
+				set.add(pre + pre2);
+				if(findAllConcatenatedWordsInADictHelper(word.substring(i), pre + pre2, set)) return true;
+			}
+		}
+		return false;
+	}
+	
+	//473. Matchsticks to Square
+	public boolean makesquare(int[] nums) {
+		//edge problem!!!!
+    	if (nums == null || nums.length < 4) return false;
+    	int sum = 0;
+        for(int num : nums) sum += num;
+        if(sum%4 != 0) return false;
+        int len = sum/4;
+        Arrays.sort(nums);        
+        return makeSquareHelper(nums, len, new int[4], nums.length - 1);
+    }
+	private boolean makeSquareHelper(int[] nums, int len, int[] sum, int idx) {
+		if(idx == -1){
+			if(sum[0] == sum[1] && sum[0] == sum[2] && sum[0] == sum[3] && sum[0] == len) return true;
+			else return false;
+		}
+		//sortä¹‹ååˆ¤æ–­æœ€é«˜å€¼æ˜¯å¦å¤§äºè¾¹é•¿ï¼Œå‡å°‘æ—¶é—´
+		if(nums[idx] > len) return false;
+		//dfs
+		for(int i = 0; i < sum.length; i++){
+			if(sum[i] + nums[idx] > len) continue;
+			sum[i] += nums[idx];
+			if(makeSquareHelper(nums, len, sum, idx - 1)) return true;
+			sum[i] -= nums[idx];
+		}
+		return false;
+	}
+	
+	//488. Zuma Game
+	public int findMinStep(String board, String hand) {
         
     }
-	
-	
-	
-	
 	
 	
 	

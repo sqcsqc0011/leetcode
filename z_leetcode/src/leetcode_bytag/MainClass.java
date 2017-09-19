@@ -25,7 +25,7 @@ public class MainClass {
 		
 		String[][] strss = {{"EZE","TIA"},{"EZE","HBA"},{"AXA","TIA"},{"JFK","AXA"},{"ANU","JFK"},{"ADL","ANU"},{"TIA","AUA"},{"ANU","AUA"},{"ADL","EZE"},{"ADL","EZE"},{"EZE","ADL"},{"AXA","EZE"},{"AUA","AXA"},{"JFK","AXA"},{"AXA","AUA"},{"AUA","ADL"},{"ANU","EZE"},{"TIA","ADL"},{"EZE","ANU"},{"AUA","ANU"}};
 		
-		int[] nums = {8, 1, 6, 6};
+		int[] nums = {1,1,2,2,2};
 		
 		int[][] numss = {{1,2,2,3,5},{3,2,3,4,4},{2,4,5,3,1},{6,7,1,4,5},{5,1,1,2,4}};
 		//,{4,300},{5,500},{5,400},{5,250},{6,370},{6,360},{7,380}};
@@ -61,6 +61,6 @@ public class MainClass {
 		//node5.next = node6;
 		ListNode[] nodes = {};
 		
-		System.out.println(dfsTag.pacificAtlantic(numss));		
+		System.out.println(dfsTag.makesquare(nums));		
 	}
 }
